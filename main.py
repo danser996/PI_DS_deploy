@@ -1,7 +1,7 @@
 # importacion de modelos requeridos
 from fastapi import FastAPI
 import pandas as pd
-from pydantic import BaseModel
+from model_SR import rec_ppal
 
 # # cargamos base de datos como dataframe
 global data
@@ -10,10 +10,6 @@ data = pd.read_csv(csv, index_col=0)
     
 # # creamos un objeto del tipo fastAPI
 app = FastAPI()
-
-@app.get("/") # "/" se refiere a http://127.0.0.1:8000 
-def index():
-    return {"message" : "Hola"}
 
 # # ## funciones API proyecto individual
 @app.get('/cantidad_filmaciones_mes/{mes}')
@@ -109,8 +105,11 @@ def get_director(nombre_director:str = 'John Lasseter'):
             'retorno_total_director': retorno_total, 
             'peliculas': lista}
 
-# # ML
-# @app.get('/recomendacion/{titulo}')
-# def recomendacion(titulo:Validation):
-#     '''Ingresas un nombre de pelicula y te recomienda las similares en una lista'''
-#     return {'lista recomendada': respuesta}
+# ML
+@app.get('/recomendacion/{titulo}')
+def recomendacion(titulo:str = 'Boomerang'):
+    '''Ingresas un nombre de pelicula y te recomienda las similares en una lista'''
+    titulo = titulo.lower()
+    rec = rec_ppal(movie=titulo)
+    rec
+    return {'lista recomendada': rec}
