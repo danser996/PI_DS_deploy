@@ -9,7 +9,7 @@ from sklearn.metrics.pairwise import linear_kernel
 def recomendacion(df, indices, title, cosine_sim):
     """Esta funcion recibe el titulo de una pelicula y retorna una recomendacion 
     de 5 peliculas similares de acuerdo a la similitud que tengan en actores,
-    generos y reseña(overview)"""
+    generos, nombre de pelicula y reseña(overview)"""
     idx = indices[title]
     sim_scores = list(enumerate(cosine_sim[idx]))
     sim_scores = sorted(sim_scores, key= lambda x:x[1], reverse=True)
@@ -18,9 +18,13 @@ def recomendacion(df, indices, title, cosine_sim):
     return df['title'].iloc[movies_idx]
 
 def rec_ppal(movie:str = 'toy story'):
+    """Esta funcion contiene todo el cuerpo del procedimiento que se realiza para hacer el sistema 
+    de recomendacion, dentro de este se realiza la vectorizacion de las palabras, y se hace un tratamiento
+    de esta, invoca la funcion de recomendacion y finalmente retorna una lista con las 5 peliculas
+    recomendadas"""
     # importamos el dataset que contiene el titilo y el tag que utilizaremos para el calculo de la matrix
     # y usar la similitud coseno
-    data = pd.read_csv('dataset_3.zip', index_col=0)
+    data = pd.read_csv('data_SR.zip', index_col=0)
     df = data[['title', 'tags']]
     # df = df.sample(frac=0.05)
     df = df.iloc[0:3001]
