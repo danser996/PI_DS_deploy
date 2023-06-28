@@ -23,7 +23,7 @@ def rec_ppal(movie:str = 'toy story'):
     data = pd.read_csv('dataset_3.zip', index_col=0)
     df = data[['title', 'tags']]
     # df = df.sample(frac=0.05)
-    df = df.iloc[0:4001]
+    df = df.iloc[0:3001]
     df.reset_index(drop=True, inplace=True)
     df['tags'] = df['tags'].str.replace('[{}]'.format(string.punctuation), ' ')
     # Usamos el vectorizer de sklearn para calcular la frecuencia de las palabras que 
