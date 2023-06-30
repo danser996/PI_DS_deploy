@@ -8,7 +8,6 @@ global data, data_sr
 # csv = "data_API.zip"
 # data = pd.read_csv(csv, index_col=0)
 data = pd.read_parquet('data_API.parquet')
-data_sr = pd.read_parquet('data_SR.parquet')
 # # creamos un objeto del tipo fastAPI
 app = FastAPI()
 
@@ -110,6 +109,7 @@ def get_director(nombre_director:str = 'John Lasseter'):
 @app.get('/recomendacion/{titulo}')
 def recomendacion(titulo:str = 'Boomerang'):
     '''Ingresas un nombre de pelicula y te recomienda las similares en una lista'''
+    data_sr = pd.read_parquet('data_SR.parquet')
     titulo = titulo.lower()
     rec = rec_ppal(data=data_sr,movie=titulo)
     rec
