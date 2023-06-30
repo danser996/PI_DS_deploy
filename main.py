@@ -5,9 +5,10 @@ from model_SR import rec_ppal
 
 # # cargamos base de datos como dataframe
 global data
-csv = "data_API.zip"
-data = pd.read_csv(csv, index_col=0)
-    
+# csv = "data_API.zip"
+# data = pd.read_csv(csv, index_col=0)
+data = pd.read_parquet('data_API.parquet')
+
 # # creamos un objeto del tipo fastAPI
 app = FastAPI()
 

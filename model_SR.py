@@ -24,10 +24,11 @@ def rec_ppal(movie:str = 'toy story'):
     recomendadas"""
     # importamos el dataset que contiene el titilo y el tag que utilizaremos para el calculo de la matrix
     # y usar la similitud coseno
-    data = pd.read_csv('data_SR.zip', index_col=0)
+    # data = pd.read_csv('data_SR.zip', index_col=0)
+    data = pd.read_parquet('data_SR.parquet')
     df = data[['title', 'tags']]
     # df = df.sample(frac=0.05)
-    df = df.iloc[0:3001]
+    df = df.iloc[0:5000]
     df.reset_index(drop=True, inplace=True)
     df['tags'] = df['tags'].str.replace('[{}]'.format(string.punctuation), ' ')
     # Usamos el vectorizer de sklearn para calcular la frecuencia de las palabras que 
