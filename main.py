@@ -4,11 +4,11 @@ import pandas as pd
 from model_SR import rec_ppal
 
 # # cargamos base de datos como dataframe
-global data
+global data, data_sr
 # csv = "data_API.zip"
 # data = pd.read_csv(csv, index_col=0)
 data = pd.read_parquet('data_API.parquet')
-
+data_sr = pd.read_parquet('data_SR.parquet')
 # # creamos un objeto del tipo fastAPI
 app = FastAPI()
 
@@ -111,6 +111,6 @@ def get_director(nombre_director:str = 'John Lasseter'):
 def recomendacion(titulo:str = 'Boomerang'):
     '''Ingresas un nombre de pelicula y te recomienda las similares en una lista'''
     titulo = titulo.lower()
-    rec = rec_ppal(movie=titulo)
+    rec = rec_ppal(data=data_sr,movie=titulo)
     rec
     return {'lista recomendada': rec}
